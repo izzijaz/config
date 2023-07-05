@@ -1,0 +1,26 @@
+Config { font = "xft:Ubuntu Mono:pixelsize=20:antialias=true:hinting=true"
+       , additionalFonts = []
+       , borderColor = "#222222"
+       , border = BottomB
+       , bgColor = "#000000"
+       , fgColor = "grey"
+       , alpha = 255
+       , position = TopW L 90
+       , textOffset = -1
+       , iconOffset = -1
+       , lowerOnStart = True
+       , pickBroadest = False
+       , persistent = False
+       , hideOnStart = False
+       , iconRoot = "."
+       , allDesktops = True
+       , overrideRedirect = True
+       , commands = [ Run Date "[%a %b %_d %Y %H:%M:%S]" "date" 10
+                    , Run UnsafeStdinReader
+                    , Run BatteryP ["BAT0"] ["-t", "[<left>% <acstatus>]", "--", "-O","<fc=green>CHARGING</fc>", "-i", "<fc=green>Idle</fc>"] 100
+                    , Run DynNetwork ["-t","[Net: <rx> <tx>]", "-S","True"] 50
+                    ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = "%date% %UnsafeStdinReader% }{ %battery% %dynnetwork%"
+       }

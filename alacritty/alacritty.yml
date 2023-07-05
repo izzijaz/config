@@ -1,0 +1,5 @@
+import:
+  - ~/.config/alacritty/themes/catppuccin/catppuccin-macchiato.yml
+
+window:
+  opacity: 0.7
