@@ -5,14 +5,11 @@ import XMonad.Util.EZConfig
 import XMonad.Util.Ungrab
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.DynamicLog
-import XMonad.Hooks.StatusBar 
-import XMonad.Hooks.StatusBar.PP
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Util.Loggers
 import XMonad.Util.Font
 import XMonad.Util.SpawnOnce
 import XMonad.Layout.Spacing
-import XMonad.Util.ClickableWorkspaces
 import XMonad.Actions.SpawnOn
 import XMonad.Layout.LayoutModifier
 import Graphics.X11.ExtraTypes.XF86
@@ -22,18 +19,14 @@ myModMask = mod4Mask;
 defaults = def {
     modMask = myModMask,
     layoutHook = myLayout,
-    manageHook = manageDocks,
     terminal = "alacritty",
     workspaces = myWorkspaces,
+    manageHook = myManageHook,
     focusedBorderColor = "#222222",
     normalBorderColor = "#333333",
     startupHook = myStartupHook 
 }
 
-myManageHook = composeAll 
-    [
-        [className =? "stalonetray" --> doIgnore]
-    ]
 myStartupHook = do
     spawnOnce "nitrogen --restore &" 
     spawnOnce "compton &"
@@ -43,8 +36,13 @@ myStartupHook = do
     spawnOnce "pasystray &"
     spawnOnce "numlockx"
 
+myManageHook = composeAll [
+    className =? "Code" --> (doShift "Code")
+    ,manageSpawn
+    ]
 
-myLayout = avoidStruts $ spacing 10 $  tiled ||| Mirror tiled ||| Full
+
+myLayout = spacing 10 $ avoidStruts $ tiled ||| Mirror tiled ||| Full
   where
     tiled   = Tall nmaster delta ratio
     nmaster = 1      -- Default number of windows in the master pane
@@ -59,11 +57,11 @@ myXmobarPP = def
     , ppHidden          = white . pad
     , ppUrgent          = red . wrap (yellow "!") (yellow "!")
     , ppOrder           = \[ws, l, _, t] -> [ws,t]
-    , ppExtras          = [xmobarColorL "#bd93f9" "#111111" $ padL $ shortenL 85 logTitle]
+    , ppExtras          = [xmobarColorL "#bd93f9" "#111111" $ padL $ shortenL 55 logTitle]
     }
   where
     currentFormatted :: String->String  
-    currentFormatted x = pad x
+    currentFormatted x =  wrap "<box>" "</box>" $ xmobarColor "#bd93f9" "#333355" $ pad x
 
     blue, lowWhite, magenta, red, white, yellow :: String -> String
     magenta  = xmobarColor "#ff79c6" ""
@@ -74,14 +72,17 @@ myXmobarPP = def
     lowWhite = xmobarColor "#bbbbbb" ""
 
 main :: IO ()
-main = xmonad . docks . ewmhFullscreen . ewmh . withEasySB(statusBarProp "xmobar ~/.config/xmobar/xmobarrc" (clickablePP myXmobarPP)) defToggleStrutsKey $ defaults `additionalKeys`
-        [ ((0, xK_Print), spawn "flameshot gui")
+main = xmonad . docks . ewmhFullscreen. ewmh (defaults `additionalKeys`
+        [ ((myModMask .|. shiftMask, xK_z), spawnOn "VSCode" "code" >> spawnOn "VSCode" "firefox")
+        , ((0, xK_Print), spawn "flameshot gui")
         , ((myModMask, xK_f), toggleScreenSpacingEnabled >> toggleWindowSpacingEnabled >> sendMessage ToggleStruts)
         , ((0, xF86XK_MonBrightnessUp), spawn "/home/izz/.config/xmonad/brightness.sh 0.1")
         , ((0, xF86XK_MonBrightnessDown), spawn "/home/izz/.config/xmonad/brightness.sh -0.1")
         , ((myModMask .|. shiftMask .|. controlMask, xK_s), spawn "systemctl suspend" )
-        , ((myModMask,xK_q), spawn "xmonad --recompile" >> spawn "xmonad --restart")
-        ]
+        ])
+    where
+        toggleStrutsKey :: XConfig Layout -> (KeyMask, KeySym)
+        toggleStrutsKey XConfig{ modMask = m } = (m, xK_b)
     
 
 

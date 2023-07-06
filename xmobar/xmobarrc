@@ -1,11 +1,11 @@
-Config { font = "xft:Ubuntu Mono:pixelsize=20:antialias=true:hinting=true"
+Config { font = "Ubuntu Mono 13"
        , additionalFonts = []
        , borderColor = "#222222"
        , border = BottomB
        , bgColor = "#000000"
        , fgColor = "grey"
        , alpha = 255
-       , position = TopW L 90
+       , position = TopSize L 90 24
        , textOffset = -1
        , iconOffset = -1
        , lowerOnStart = True
@@ -15,12 +15,12 @@ Config { font = "xft:Ubuntu Mono:pixelsize=20:antialias=true:hinting=true"
        , iconRoot = "."
        , allDesktops = True
        , overrideRedirect = True
-       , commands = [ Run Date "[%a %b %_d %Y %H:%M:%S]" "date" 10
-                    , Run UnsafeStdinReader
+       , commands = [ Run Date "<fc=#AAAAAA,#333333:0> %a %b %_d %Y %H:%M:%S </fc>" "date" 10
+                    , Run UnsafeXMonadLog
                     , Run BatteryP ["BAT0"] ["-t", "[<left>% <acstatus>]", "--", "-O","<fc=green>CHARGING</fc>", "-i", "<fc=green>Idle</fc>"] 100
                     , Run DynNetwork ["-t","[Net: <rx> <tx>]", "-S","True"] 50
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%date% %UnsafeStdinReader% }{ %battery% %dynnetwork%"
+       , template = "%date% %UnsafeXMonadLog% }{ %battery% %dynnetwork%"
        }
