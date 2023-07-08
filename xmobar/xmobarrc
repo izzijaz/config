@@ -1,4 +1,4 @@
-Config { font = "Ubuntu Mono 13"
+Config { font = "UbuntuMono Nerd Font 14"
        , additionalFonts = []
        , borderColor = "#222222"
        , border = BottomB
@@ -17,10 +17,24 @@ Config { font = "Ubuntu Mono 13"
        , overrideRedirect = True
        , commands = [ Run Date "<fc=#AAAAAA,#333333:0> %a %b %_d %Y %H:%M:%S </fc>" "date" 10
                     , Run UnsafeXMonadLog
-                    , Run BatteryP ["BAT0"] ["-t", "[<left>% <acstatus>]", "--", "-O","<fc=green>CHARGING</fc>", "-i", "<fc=green>Idle</fc>"] 100
-                    , Run DynNetwork ["-t","[Net: <rx> <tx>]", "-S","True"] 50
+                    , Run BatteryP ["BAT0"] [
+                            "-t", " 󰁹 <left>%<acstatus> ", 
+                            "--", 
+                            "-O","<fc=green,#333333:0>󱐋</fc>", 
+                            "-i", "<fc=green,#333333:0>󱐌</fc>",
+                            "-o", "",
+                            "-l", "red",
+                            "-m", "yellow",
+                            "-A", "10",
+                            "-a", "notify-send -u critical 'Power' 'Battery Level 10%'"
+                        ] 
+                    100
+                    , Run DynNetwork [
+                            "-t"," <rx>  <tx>", 
+                            "-S","True"
+                        ] 50
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%date% %UnsafeXMonadLog% }{ %battery% %dynnetwork%"
+       , template = "   %date%%UnsafeXMonadLog% }{ <fc=#AAAAAA,#333333:0> %dynnetwork% %battery%</fc>"
        }

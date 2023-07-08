@@ -17,7 +17,7 @@ import XMonad.Actions.SpawnOn
 import XMonad.Layout.LayoutModifier
 import Graphics.X11.ExtraTypes.XF86
 
-myWorkspaces = ["Term", "wWw", "Code", "TxT"]
+myWorkspaces = ["1:\xebca", "2:\xe745", "3:\xf0d6e", "4:\xf15c", "5:\xe217"]
 myModMask = mod4Mask;
 defaults = def {
     modMask = myModMask,
@@ -53,17 +53,19 @@ myLayout = avoidStruts $ spacing 10 $  tiled ||| Mirror tiled ||| Full
 
 myXmobarPP :: PP
 myXmobarPP = def
-    { ppSep             = magenta "|"
+    { ppSep             = magenta "| "
     , ppHiddenNoWindows = red . pad
+    , ppWsSep           = " "
+    , ppVisibleNoWindows= Just pad
     , ppCurrent         = currentFormatted
     , ppHidden          = white . pad
     , ppUrgent          = red . wrap (yellow "!") (yellow "!")
     , ppOrder           = \[ws, l, _, t] -> [ws,t]
-    , ppExtras          = [xmobarColorL "#bd93f9" "#111111" $ padL $ shortenL 85 logTitle]
+    , ppExtras          = [xmobarColorL "#000000" "#AAAAAA" $ padL $ shortenL 85 logTitle]
     }
   where
     currentFormatted :: String->String  
-    currentFormatted x = pad x
+    currentFormatted x = wrap "<fc=#AAAAAA,#000000:0>" "</fc>" $ pad x
 
     blue, lowWhite, magenta, red, white, yellow :: String -> String
     magenta  = xmobarColor "#ff79c6" ""
@@ -74,13 +76,13 @@ myXmobarPP = def
     lowWhite = xmobarColor "#bbbbbb" ""
 
 main :: IO ()
-main = xmonad . docks . ewmhFullscreen . ewmh . withEasySB(statusBarProp "xmobar ~/.config/xmobar/xmobarrc" (clickablePP myXmobarPP)) defToggleStrutsKey $ defaults `additionalKeys`
+main = xmonad . docks . ewmhFullscreen . ewmh . withEasySB(statusBarProp "~/.cabal/bin/xmobar ~/.config/xmobar/xmobarrc" (clickablePP myXmobarPP)) defToggleStrutsKey $ defaults `additionalKeys`
         [ ((0, xK_Print), spawn "flameshot gui")
         , ((myModMask, xK_f), toggleScreenSpacingEnabled >> toggleWindowSpacingEnabled >> sendMessage ToggleStruts)
         , ((0, xF86XK_MonBrightnessUp), spawn "/home/izz/.config/xmonad/brightness.sh 0.1")
         , ((0, xF86XK_MonBrightnessDown), spawn "/home/izz/.config/xmonad/brightness.sh -0.1")
         , ((myModMask .|. shiftMask .|. controlMask, xK_s), spawn "systemctl suspend" )
-        , ((myModMask,xK_q), spawn "xmonad --recompile" >> spawn "xmonad --restart")
+        , ((myModMask,xK_q), spawn "xmonad--restart")
         ]
     
 
