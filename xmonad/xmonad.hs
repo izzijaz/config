@@ -17,7 +17,7 @@ import XMonad.Actions.SpawnOn
 import XMonad.Layout.LayoutModifier
 import Graphics.X11.ExtraTypes.XF86
 
-myWorkspaces = ["1:\xebca", "2:\xe745", "3:\xf0d6e", "4:\xf15c", "5:\xe217"]
+myWorkspaces = ["1:\xebca ", "2:\xe745 ", "3:\xf0d6e ", "4:\xf15c ", "5:\xe217 "]
 myModMask = mod4Mask;
 defaults = def {
     modMask = myModMask,
@@ -56,17 +56,18 @@ myXmobarPP = def
     { ppSep             = magenta "| "
     , ppHiddenNoWindows = red . pad
     , ppWsSep           = " "
-    , ppVisibleNoWindows= Just pad
     , ppCurrent         = currentFormatted
     , ppHidden          = white . pad
     , ppUrgent          = red . wrap (yellow "!") (yellow "!")
     , ppOrder           = \[ws, l, _, t] -> [ws,t]
-    , ppExtras          = [xmobarColorL "#000000" "#AAAAAA" $ padL $ shortenL 85 logTitle]
+    , ppExtras          = [logTitleFormat]
     }
   where
     currentFormatted :: String->String  
-    currentFormatted x = wrap "<fc=#AAAAAA,#000000:0>" "</fc>" $ pad x
-
+    currentFormatted x = wrap "<fc=#000000,#AAAAAA:0>" "</fc>" $ pad x
+    
+    logTitleFormat :: Logger
+    logTitleFormat =  logDefault (xmobarColorL "#333333" "#AAAAAA" $ padL logTitle) $ logConst "\xf05b0"
     blue, lowWhite, magenta, red, white, yellow :: String -> String
     magenta  = xmobarColor "#ff79c6" ""
     blue     = xmobarColor "#bd93f9" ""
