@@ -67,7 +67,7 @@ myXmobarPP = def
     currentFormatted x = wrap "<fc=#000000,#AAAAAA:0>" "</fc>" $ pad x
     
     logTitleFormat :: Logger
-    logTitleFormat =  logDefault (xmobarColorL "#333333" "#AAAAAA" $ padL logTitle) $ logConst "\xf05b0"
+    logTitleFormat =  logDefault (xmobarColorL "#333333" "#AAAAAA" $ padL $ shortenL 75 logTitle) $ logConst "\xf05b0"
     blue, lowWhite, magenta, red, white, yellow :: String -> String
     magenta  = xmobarColor "#ff79c6" ""
     blue     = xmobarColor "#bd93f9" ""

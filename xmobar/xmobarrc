@@ -22,7 +22,7 @@ Config { font = "UbuntuMono Nerd Font 14"
                             "--", 
                             "-O","<fc=green,#333333:0>󱐋</fc>", 
                             "-i", "<fc=green,#333333:0>󱐌</fc>",
-                            "-o", "",
+                            "-o", " ",
                             "-l", "red",
                             "-m", "yellow",
                             "-A", "10",
