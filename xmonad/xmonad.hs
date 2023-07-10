@@ -44,7 +44,7 @@ myStartupHook = do
     spawnOnce "numlockx"
 
 
-myLayout = avoidStruts $ spacing 10 $  tiled ||| Mirror tiled ||| Full
+myLayout = avoidStruts $ spacing 10 $  tiled ||| Full
   where
     tiled   = Tall nmaster delta ratio
     nmaster = 1      -- Default number of windows in the master pane
