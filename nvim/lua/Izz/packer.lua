@@ -42,6 +42,7 @@ return require('packer').startup(function(use)
     use "hrsh7th/cmp-path"
     use { 'saadparwaiz1/cmp_luasnip' }
     use "hrsh7th/cmp-nvim-lua"
+    use "brenoprata10/nvim-highlight-colors"
     use { 'mhartington/formatter.nvim' }
     use {
         "ray-x/lsp_signature.nvim",
