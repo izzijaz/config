@@ -4,7 +4,15 @@
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
+# export Path Variables 
 export PATH="$PATH:$HOME/.cargo/bin"
+export PATH="$PATH:$HOME/.ghcup/bin"
+export PATH="$PATH:$HOME/.cabal/bin"
+
+# setup Aliases 
+alias v="nvim"
+alias get_idf='. $HOME/esp/esp-idf/export.sh'
+
 # Set up the prompt
 
 autoload -Uz promptinit
