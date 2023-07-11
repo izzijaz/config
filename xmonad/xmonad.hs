@@ -35,14 +35,20 @@ myManageHook = composeAll
     , appName =? "gnome-calculator" --> doFloat
     , manageDocks
     ]
+
+wallpaperPath :: String
+wallpaperPath="mylivewallpapers-com-Glow-Tree.mp4"
+
 myStartupHook = do
-    spawnOnce "nitrogen --restore &" 
+ --   spawnOnce "nitrogen --restore &"  --Wallpapers (still)
     spawnOnce "compton &"
     spawnOnce "stalonetray &"
     spawnOnce "nm-applet --sm-disable &"
     spawnOnce "xscreensaver &"       
     spawnOnce "pasystray &"
     spawnOnce "numlockx"
+    spawnOnce $ "sleep 0.1 && xwinwrap -ov -g 1920x1080 -- mpv -wid %WID --panscan=1.0 --no-audio --no-osc --no-osd-bar --no-input-default-bindings --loop ~/Pictures/Wallpepers/" ++ wallpaperPath --Live Wallpapers
+    
 
 
 myLayout = avoidStruts $ spacing 10 $  tiled ||| Full
@@ -78,13 +84,14 @@ myXmobarPP = def
     lowWhite = xmobarColor "#bbbbbb" ""
 
 main :: IO ()
-main = xmonad . docks . ewmhFullscreen . ewmh . withEasySB(statusBarProp "~/.cabal/bin/xmobar ~/.config/xmobar/xmobarrc" (clickablePP myXmobarPP)) defToggleStrutsKey $ defaults `additionalKeys`
+main = do
+    xmonad . docks . ewmhFullscreen . ewmh $ withSB (statusBarProp "~/.cabal/bin/xmobar ~/.config/xmobar/xmobarrc" (clickablePP myXmobarPP)) $ defaults `additionalKeys`
         [ ((0, xK_Print), spawn "flameshot gui")
         , ((myModMask, xK_f), toggleScreenSpacingEnabled >> toggleWindowSpacingEnabled >> sendMessage ToggleStruts)
         , ((0, xF86XK_MonBrightnessUp), spawn "/home/izz/.config/xmonad/brightness.sh 0.1")
         , ((0, xF86XK_MonBrightnessDown), spawn "/home/izz/.config/xmonad/brightness.sh -0.1")
         , ((myModMask .|. shiftMask .|. controlMask, xK_s), spawn "systemctl suspend" )
-        , ((myModMask,xK_q), spawn "xmonad--restart")
+        , ((myModMask,xK_q), spawn "xmonad --restart")
         ]
     
 
