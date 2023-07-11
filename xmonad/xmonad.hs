@@ -22,7 +22,7 @@ myModMask = mod4Mask;
 defaults = def {
     modMask = myModMask,
     layoutHook = myLayout,
-    manageHook = manageDocks,
+    manageHook = myManageHook,
     terminal = "alacritty",
     workspaces = myWorkspaces,
     focusedBorderColor = "#222222",
@@ -31,8 +31,9 @@ defaults = def {
 }
 
 myManageHook = composeAll 
-    [
-        [className =? "stalonetray" --> doIgnore]
+    [ className =? "stalonetray" --> doIgnore
+    , appName =? "gnome-calculator" --> doFloat
+    , manageDocks
     ]
 myStartupHook = do
     spawnOnce "nitrogen --restore &" 

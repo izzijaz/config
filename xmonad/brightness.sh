@@ -21,4 +21,4 @@ fi
 
 # Set new brightness using xrandr
 xrandr --output "$monitor" --brightness "$new_brightness"
-
+notify-send --hint=string:x-dunst-stack-tag:test Brightness "$new_brightness"
