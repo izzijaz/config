@@ -33,6 +33,7 @@ defaults = def {
 myManageHook = composeAll 
     [ className =? "stalonetray" --> doIgnore
     , appName =? "gnome-calculator" --> doFloat
+    , className =? "TelegramDesktop" --> doShift "5:\xe217 "
     , manageDocks
     ]
 
@@ -47,6 +48,7 @@ myStartupHook = do
     spawnOnce "xscreensaver &"       
     spawnOnce "pasystray &"
     spawnOnce "numlockx"
+    spawnOnce "telegram-desktop"
     spawnOnce $ "sleep 0.1 && xwinwrap -ov -g 1920x1080 -- mpv -wid %WID --panscan=1.0 --no-audio --no-osc --no-osd-bar --no-input-default-bindings --loop ~/Pictures/Wallpepers/" ++ wallpaperPath --Live Wallpapers
     
 
