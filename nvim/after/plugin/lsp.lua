@@ -9,14 +9,19 @@ lsp.ensure_installed({
 })
 
 -- (Optional) Configure lua language server for neovim
+local lsp_config = require('lspconfig')
 require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
 require('lspconfig').clangd.setup({
     cmd = {
         "clangd",
+        "--background-index",
         "--query-driver",
-        "/usr/bin/g++",
+        --"/usr/bin/g++", -- For C++
+        --"/usr/bin/gcc", --For C.
+        "/home/izz/.espressif/tools/xtensa-esp32-elf/esp-12.2.0_20230208/**/bin/xtensa-esp32-elf-*", --esp-idf
         "--offset-encoding=utf-16",
-    }
+    },
+    root_dir = lsp_config.util.root_pattern('build/compile_commands.json', '.git')
 })
 lsp.setup()
 
