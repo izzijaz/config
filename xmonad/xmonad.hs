@@ -49,7 +49,7 @@ myStartupHook = do
     spawnOnce "pasystray &"
     spawnOnce "numlockx"
     spawnOnce "telegram-desktop"
-    spawnOnce $ "sleep 0.1 && xwinwrap -ov -g 1920x1080 -- mpv -wid %WID --panscan=1.0 --no-audio --no-osc --no-osd-bar --no-input-default-bindings --loop ~/Pictures/Wallpepers/" ++ wallpaperPath --Live Wallpapers
+    spawnOnce $ "sleep 0.2 && xwinwrap -ov -g 1920x1080 -- mpv -wid %WID --panscan=1.0 --no-audio --no-osc --no-osd-bar --no-input-default-bindings --loop ~/Pictures/Wallpepers/" ++ wallpaperPath --Live Wallpapers
     
 
 
@@ -95,7 +95,10 @@ main = do
         , ((myModMask .|. shiftMask .|. controlMask, xK_s), spawn "systemctl suspend" )
         , ((myModMask,xK_q), spawn "xmonad --restart")
         ]
-    
+        `additionalMouseBindings` 
+        [ ((myModMask, button4), (\_ ->spawn "/home/izz/.config/xmonad/brightness.sh 0.1"))
+        , ((myModMask, button5), (\_ -> spawn "/home/izz/.config/xmonad/brightness.sh -0.1"))
+        ]
 
 
 
