@@ -29,14 +29,14 @@
                               -- can be either number or function, see examples
 
   close_timeout = 4000, -- close floating window after ms when laster parameter is entered
-  fix_pos = false,  -- set to true, the floating window will not auto-close until finish all parameters
+  fix_pos = true,  -- set to true, the floating window will not auto-close until finish all parameters
   hint_enable = true, -- virtual hint enable
   hint_prefix = "🐼 ",  -- Panda for parameter, NOTE: for the terminal not support emoji, might crash
   hint_scheme = "String",
   hint_inline = function() return false end,  -- should the hint be inline(nvim 0.10 only)?  default false
   hi_parameter = "LspSignatureActiveParameter", -- how your parameter will be highlight
   handler_opts = {
-    border = "none"   -- double, rounded, single, shadow, none, or a table of borders
+    border = "single"   -- double, rounded, single, shadow, none, or a table of borders
   },
 
   always_trigger = false, -- sometime show signature on new line or in middle of parameter can be confusing, set it to false for #58

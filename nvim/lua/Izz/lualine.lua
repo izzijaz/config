@@ -1,1 +1,5 @@
-require('lualine').setup({options={theme="modus-vivendi"}})
+require('lualine').setup({
+    options={
+        theme="palenight"
+    }
+})
